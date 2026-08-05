@@ -1,0 +1,14 @@
+$kind: http-request
+name: Submit Answer
+method: POST
+url: '{{baseUrl}}/api/interview/{{sessionId}}/answer'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "answer": "My answer here"
+    }

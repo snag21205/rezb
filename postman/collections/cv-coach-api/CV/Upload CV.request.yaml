@@ -1,0 +1,11 @@
+$kind: http-request
+name: Upload CV
+method: POST
+url: '{{baseUrl}}/api/cv/upload'
+order: 1000
+body:
+  type: formdata
+  content:
+    - key: cv
+      type: file
+      src: ''

@@ -1,0 +1,14 @@
+$kind: http-request
+name: Analyze CV
+method: POST
+url: '{{baseUrl}}/api/cv/analyze/{{resumeId}}'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "resumeId": "{{resumeId}}"
+    }

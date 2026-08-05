@@ -1,0 +1,15 @@
+$kind: http-request
+name: Start Interview Session
+method: POST
+url: '{{baseUrl}}/api/interview/start'
+order: 1000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "resumeId": "{{resumeId}}",
+      "jdId": "{{jdId}}"
+    }

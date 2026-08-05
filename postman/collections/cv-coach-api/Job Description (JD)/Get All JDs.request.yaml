@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get All JDs
+method: GET
+url: '{{baseUrl}}/api/jd'
+order: 2000

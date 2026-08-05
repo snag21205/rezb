@@ -1,0 +1,5 @@
+$kind: http-request
+name: Complete Interview Session
+method: POST
+url: '{{baseUrl}}/api/interview/{{sessionId}}/complete'
+order: 3000

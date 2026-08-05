@@ -1,0 +1,7 @@
+# Use this workspace to collaborate
+workspace:
+  id: 71912e2a-428e-41de-8e1f-1b1b9e28be0b
+
+localResources:
+  docs:
+    - ..\docs\implementation_plan.md

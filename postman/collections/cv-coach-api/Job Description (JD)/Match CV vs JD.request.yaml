@@ -1,0 +1,15 @@
+$kind: http-request
+name: Match CV vs JD
+method: POST
+url: '{{baseUrl}}/api/jd/match'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "resumeId": "{{resumeId}}",
+      "jdId": "{{jdId}}"
+    }
