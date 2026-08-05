@@ -51,3 +51,7 @@ server/uploads/*
 # ===== Misc =====
 .vercel
 .turbo
+
+# ===== Postman =====
+# Environments có thể chứa API keys — không commit
+postman/environments/
