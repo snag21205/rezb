@@ -1,23 +1,20 @@
-// PDF Parser — extract text from PDF and DOCX files
-// Will be implemented in Phase 2
-
-// import pdfParse from 'pdf-parse'
-// import mammoth from 'mammoth'
+import pdfParse from 'pdf-parse'
+import mammoth from 'mammoth'
 
 /**
  * Extract text from a PDF buffer
  */
-export async function parsePDF(_buffer: Buffer): Promise<string> {
-  // TODO: Implement with pdf-parse
-  throw new Error('Not implemented yet — Phase 2')
+export async function parsePDF(buffer: Buffer): Promise<string> {
+  const data = await pdfParse(buffer)
+  return data.text.trim()
 }
 
 /**
  * Extract text from a DOCX buffer
  */
-export async function parseDOCX(_buffer: Buffer): Promise<string> {
-  // TODO: Implement with mammoth
-  throw new Error('Not implemented yet — Phase 2')
+export async function parseDOCX(buffer: Buffer): Promise<string> {
+  const result = await mammoth.extractRawText({ buffer })
+  return result.value.trim()
 }
 
 /**
@@ -31,6 +28,6 @@ export async function parseCV(buffer: Buffer, filename: string): Promise<string>
     case 'docx':
       return parseDOCX(buffer)
     default:
-      throw new Error(`Unsupported file type: .${ext}`)
+      throw new Error(`Unsupported file type: .${ext}. Only PDF and DOCX are supported.`)
   }
 }
