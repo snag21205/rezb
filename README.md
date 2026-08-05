@@ -10,55 +10,63 @@ AI-powered web application giúp người tìm việc **phân tích CV**, **so k
 | Backend | Express.js + TypeScript |
 | Database | Supabase (PostgreSQL + Auth + Storage) |
 | AI | Google Gemini API (Free tier) |
+| Package Manager | pnpm (workspace) |
 
 ## Project Structure
 
 ```
-├── client/          # Frontend (React + Vite)
-├── server/          # Backend (Express.js)
-├── shared/          # Shared TypeScript types
-└── docs/            # Documentation & ideas
+├── client/          # Frontend (@cv-coach/client)
+├── server/          # Backend (@cv-coach/server)
+├── shared/          # Shared TypeScript types (@cv-coach/shared)
+├── docs/            # Documentation & SQL schema
+├── pnpm-workspace.yaml
+└── package.json
 ```
 
 ## Getting Started
 
 ### Prerequisites
 - Node.js >= 18
-- npm >= 9
-- Supabase account (free)
-- Google AI API key (free)
+- pnpm >= 9 — cài bằng `npm install -g pnpm`
+- Supabase account (free) — [supabase.com](https://supabase.com)
+- Google AI API key (free) — [aistudio.google.com](https://aistudio.google.com)
 
 ### Installation
 
 ```bash
-# Install all dependencies (client + server)
-npm run install:all
+# 1. Cài tất cả dependencies (client + server + shared)
+pnpm install
 
-# Setup environment variables
+# 2. Setup environment variables
 cp server/.env.example server/.env
 cp client/.env.example client/.env
-# Edit .env files with your keys
+# Điền API keys vào các file .env
 
-# Start development
-npm run dev
+# 3. Setup database
+# Vào Supabase Dashboard → SQL Editor → chạy docs/supabase-schema.sql
+
+# 4. Khởi động dev server
+pnpm dev
 ```
 
 ### Available Scripts
 
 | Command | Description |
 |---|---|
-| `npm run dev` | Start both client & server in dev mode |
-| `npm run dev:client` | Start frontend only (port 5173) |
-| `npm run dev:server` | Start backend only (port 3001) |
-| `npm run build` | Build both client & server |
-| `npm run install:all` | Install deps for client + server |
+| `pnpm dev` | Start cả client & server cùng lúc |
+| `pnpm dev:client` | Chỉ chạy frontend (port 5173) |
+| `pnpm dev:server` | Chỉ chạy backend (port 3001) |
+| `pnpm build` | Build cả client & server |
+| `pnpm lint` | Lint cả client & server |
+
+> ⚠️ **Lưu ý**: Dùng `pnpm` thay vì `npm`. Thêm package mới bằng `pnpm --filter @cv-coach/client add <pkg>` hoặc `pnpm --filter @cv-coach/server add <pkg>`.
 
 ## Features
 
-- 📄 **CV Analysis** — Upload CV, get AI-powered feedback with ATS score
-- 🎯 **JD Matching** — Compare your CV against job descriptions
-- 🎤 **Mock Interview** — Practice with AI-generated questions & STAR feedback
-- 📊 **Dashboard** — Track your progress over time
+- 📄 **CV Analysis** — Upload CV, nhận phân tích AI với ATS score
+- 🎯 **JD Matching** — So khớp CV với mô tả công việc
+- 🎤 **Mock Interview** — Luyện phỏng vấn với câu hỏi AI + phân tích STAR
+- 📊 **Dashboard** — Theo dõi tiến độ theo thời gian
 
 ## License
 

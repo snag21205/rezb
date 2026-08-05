@@ -1,5 +1,5 @@
 {
-  "name": "cv-interview-coach-client",
+  "name": "@cv-coach/client",
   "private": true,
   "version": "1.0.0",
   "type": "module",

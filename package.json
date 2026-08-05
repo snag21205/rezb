@@ -4,19 +4,18 @@
   "description": "AI-powered CV analysis & interview coaching platform",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "dev:client": "cd client && npm run dev",
-    "dev:server": "cd server && npm run dev",
-    "build": "concurrently \"npm run build:client\" \"npm run build:server\"",
-    "build:client": "cd client && npm run build",
-    "build:server": "cd server && npm run build",
-    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
-    "lint": "concurrently \"cd client && npm run lint\" \"cd server && npm run lint\""
+    "dev": "concurrently \"pnpm --filter @cv-coach/client dev\" \"pnpm --filter @cv-coach/server dev\"",
+    "dev:client": "pnpm --filter @cv-coach/client dev",
+    "dev:server": "pnpm --filter @cv-coach/server dev",
+    "build": "concurrently \"pnpm --filter @cv-coach/client build\" \"pnpm --filter @cv-coach/server build\"",
+    "install:all": "pnpm install",
+    "lint": "concurrently \"pnpm --filter @cv-coach/client lint\" \"pnpm --filter @cv-coach/server lint\""
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
   }
 }
