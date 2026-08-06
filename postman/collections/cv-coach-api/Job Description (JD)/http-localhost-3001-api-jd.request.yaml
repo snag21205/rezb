@@ -1,0 +1,19 @@
+$kind: http-request
+name: " http://localhost:3001/api/jd"
+description: ""
+url: " http://localhost:3001/api/jd"
+method: POST
+headers:
+  Authorization: Bearer {{supabase_service_role_api_key_0h53}}
+body:
+  type: json
+  content: "{\r
+
+    \  \"title\": \"Frontend Developer\",\r
+
+    \  \"company\": \"ABC Tech\",\r
+
+    \  \"rawText\": \"We are looking for a Frontend Developer with 2+ years experience in React, TypeScript, TailwindCSS...\"\r
+
+    }"
+order: 3257282148172605

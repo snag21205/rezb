@@ -1,4 +1,4 @@
-# CV & Interview Coach
+# CV & Interview Coach (rezb)
 
 Trợ lý AI giúp người tìm việc cải thiện CV và luyện tập phỏng vấn dựa trên mô tả công việc (JD) cụ thể.
 

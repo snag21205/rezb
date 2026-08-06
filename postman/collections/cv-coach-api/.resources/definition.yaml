@@ -2,17 +2,27 @@ $kind: collection
 name: CV Coach API
 variables:
   - key: baseUrl
-    value: 'http://localhost:3001'
+    value: http://localhost:3001
+    disabled: false
   - key: authToken
-    value: ''
+    value: ""
+    disabled: false
   - key: resumeId
-    value: ''
+    value: ""
+    disabled: false
   - key: jdId
-    value: ''
+    value: ""
+    disabled: false
   - key: sessionId
-    value: ''
+    value: ""
+    disabled: false
+  - key: supabase_service_role_api_key_0h53
+    secret: true
+    disabled: false
+  - key: bearer_token_0kup
+    secret: true
+    disabled: false
 auth:
   type: bearer
   credentials:
-    - key: token
-      value: '{{authToken}}'
+    token: "{{authToken}}"

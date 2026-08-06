@@ -1,5 +1,5 @@
 {
-  "name": "cv-interview-coach-shared",
+  "name": "@cv-coach/shared",
   "version": "1.0.0",
   "private": true,
   "main": "types/index.ts"
