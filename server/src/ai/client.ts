@@ -29,24 +29,37 @@ export async function generateJSON<T>(prompt: string, retries = 3): Promise<T> {
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
           responseMimeType: 'application/json',
-          temperature: 0.7,
+          temperature: 0.4, // Lower temperature = more deterministic JSON
+          maxOutputTokens: 2048,
         },
       })
 
-      const text = result.response.text()
+      let text = result.response.text().trim()
+
+      // Strip markdown code blocks nếu có (```json ... ```)
+      const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/)
+      if (codeBlockMatch?.[1]) {
+        text = codeBlockMatch[1].trim()
+      }
+
       return JSON.parse(text) as T
 
     } catch (err: any) {
       const is429 = err?.message?.includes('429') || err?.status === 429
+      const isParseError = err instanceof SyntaxError
       const isLastAttempt = attempt === retries
 
       if (is429 && !isLastAttempt) {
-        // Tìm retryDelay từ message nếu có, không thì backoff mặc định
         const delayMatch = err.message?.match(/retryDelay.*?(\d+)s/)
         const waitMs = delayMatch ? parseInt(delayMatch[1]!) * 1000 : attempt * 12000
-
         console.warn(`[Gemini] 429 - Retry ${attempt}/${retries} sau ${waitMs / 1000}s...`)
         await sleep(waitMs)
+        continue
+      }
+
+      if (isParseError && !isLastAttempt) {
+        console.warn(`[Gemini] JSON parse error - Retry ${attempt}/${retries}...`)
+        await sleep(2000)
         continue
       }
 

@@ -1,25 +1,16 @@
 import { Router } from 'express'
 import { aiLimiter } from '../middleware/rateLimiter'
-// import * as jdController from '../controllers/jd.controller'
+import * as jdController from '../controllers/jd.controller'
 
 const router = Router()
 
-// POST /api/jd — Save a new job description
-router.post('/', async (_req, res) => {
-  // TODO: Implement in Phase 3
-  res.status(501).json({ message: 'Save JD — coming in Phase 3' })
-})
+// GET /api/jd — Lấy danh sách JD đã lưu
+router.get('/', jdController.getAll)
 
-// GET /api/jd — Get all saved JDs
-router.get('/', async (_req, res) => {
-  // TODO: Implement in Phase 3
-  res.status(501).json({ message: 'List JDs — coming in Phase 3' })
-})
+// POST /api/jd — Lưu JD mới
+router.post('/', jdController.create)
 
-// POST /api/jd/match — Match CV vs JD (SSE stream)
-router.post('/match', aiLimiter, async (_req, res) => {
-  // TODO: Implement in Phase 3
-  res.status(501).json({ message: 'JD matching — coming in Phase 3' })
-})
+// POST /api/jd/match — So khớp CV với JD (AI)
+router.post('/match', aiLimiter, jdController.match)
 
 export default router
