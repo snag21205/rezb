@@ -1,31 +1,22 @@
 import { Router } from 'express'
 import { aiLimiter } from '../middleware/rateLimiter'
-// import * as interviewController from '../controllers/interview.controller'
+import * as interviewController from '../controllers/interview.controller'
 
 const router = Router()
 
-// POST /api/interview/start — Start new interview session
-router.post('/start', aiLimiter, async (_req, res) => {
-  // TODO: Implement in Phase 4
-  res.status(501).json({ message: 'Start interview — coming in Phase 4' })
-})
+// GET /api/interview/history — Lịch sử các session (phải trước /:sessionId)
+router.get('/history', interviewController.history)
 
-// POST /api/interview/:sessionId/answer — Submit answer
-router.post('/:sessionId/answer', aiLimiter, async (_req, res) => {
-  // TODO: Implement in Phase 4
-  res.status(501).json({ message: 'Submit answer — coming in Phase 4' })
-})
+// POST /api/interview/start — Bắt đầu phỏng vấn mới
+router.post('/start', aiLimiter, interviewController.start)
 
-// POST /api/interview/:sessionId/complete — Complete session
-router.post('/:sessionId/complete', async (_req, res) => {
-  // TODO: Implement in Phase 4
-  res.status(501).json({ message: 'Complete interview — coming in Phase 4' })
-})
+// GET /api/interview/:sessionId — Chi tiết 1 session
+router.get('/:sessionId', interviewController.getSession)
 
-// GET /api/interview/history — Get interview history
-router.get('/history', async (_req, res) => {
-  // TODO: Implement in Phase 4
-  res.status(501).json({ message: 'Interview history — coming in Phase 4' })
-})
+// POST /api/interview/:sessionId/answer — Submit câu trả lời
+router.post('/:sessionId/answer', aiLimiter, interviewController.answer)
+
+// POST /api/interview/:sessionId/complete — Kết thúc session
+router.post('/:sessionId/complete', aiLimiter, interviewController.complete)
 
 export default router

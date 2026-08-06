@@ -4,11 +4,11 @@ import { env } from '../config/env'
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY)
 
 /**
- * Gemini 2.0 Flash model instance
+ * Gemini 3.5 Flash model instance
  * Free tier: 15 RPM, 1M tokens/min, 1500 req/day
  */
 export const geminiModel = genAI.getGenerativeModel({
-  model: 'gemini-3.5-flash',
+  model: 'gemini-3.6-flash',
 })
 
 /**
@@ -46,13 +46,14 @@ export async function generateJSON<T>(prompt: string, retries = 3): Promise<T> {
 
     } catch (err: any) {
       const is429 = err?.message?.includes('429') || err?.status === 429
+      const is503 = err?.message?.includes('503') || err?.status === 503
       const isParseError = err instanceof SyntaxError
       const isLastAttempt = attempt === retries
 
-      if (is429 && !isLastAttempt) {
+      if ((is429 || is503) && !isLastAttempt) {
         const delayMatch = err.message?.match(/retryDelay.*?(\d+)s/)
-        const waitMs = delayMatch ? parseInt(delayMatch[1]!) * 1000 : attempt * 12000
-        console.warn(`[Gemini] 429 - Retry ${attempt}/${retries} sau ${waitMs / 1000}s...`)
+        const waitMs = delayMatch ? parseInt(delayMatch[1]!) * 1000 : attempt * 8000
+        console.warn(`[Gemini] ${is429 ? '429' : '503'} - Retry ${attempt}/${retries} sau ${waitMs / 1000}s...`)
         await sleep(waitMs)
         continue
       }
