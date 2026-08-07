@@ -1,57 +1,58 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import { AuthProvider } from './contexts/AuthContext'
+import { ProtectedRoute, PublicRoute } from './components/auth/ProtectedRoute'
 
-// Pages (will be implemented in later phases)
-// import LandingPage from '@/pages/LandingPage'
-// import LoginPage from '@/pages/LoginPage'
-// import RegisterPage from '@/pages/RegisterPage'
-// import DashboardPage from '@/pages/DashboardPage'
-// import CVAnalysisPage from '@/pages/CVAnalysisPage'
-// import JDMatchingPage from '@/pages/JDMatchingPage'
-// import InterviewPage from '@/pages/InterviewPage'
-// import InterviewSessionPage from '@/pages/InterviewSessionPage'
-// import HistoryPage from '@/pages/HistoryPage'
+// Pages
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import DashboardLayout from './components/layout/DashboardLayout'
+import DashboardPage from './pages/DashboardPage'
+import CVAnalysisPage from './pages/CVAnalysisPage'
+import JDMatchingPage from './pages/JDMatchingPage'
+import InterviewPage from './pages/InterviewPage'
+import InterviewSessionPage from './pages/InterviewSessionPage'
+import HistoryPage from './pages/HistoryPage'
 
-// Layout
-// import DashboardLayout from '@/components/layout/DashboardLayout'
-
-function App() {
+export default function App() {
   return (
-    <Routes>
-      {/* Public routes */}
-      <Route path="/" element={<PlaceholderPage title="Landing Page" />} />
-      <Route path="/login" element={<PlaceholderPage title="Login" />} />
-      <Route path="/register" element={<PlaceholderPage title="Register" />} />
+    <AuthProvider>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: 'var(--color-surface-2)',
+            color: 'var(--color-text)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 'var(--radius-md)',
+            fontFamily: 'var(--font-sans)',
+            fontSize: '14px',
+          },
+        }}
+      />
+      <Routes>
+        {/* Public auth routes */}
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
 
-      {/* Protected routes (will be wrapped in DashboardLayout) */}
-      <Route path="/dashboard" element={<PlaceholderPage title="Dashboard" />} />
-      <Route path="/cv-analysis" element={<PlaceholderPage title="CV Analysis" />} />
-      <Route path="/jd-matching" element={<PlaceholderPage title="JD Matching" />} />
-      <Route path="/interview" element={<PlaceholderPage title="Interview" />} />
-      <Route path="/interview/:id" element={<PlaceholderPage title="Interview Session" />} />
-      <Route path="/history" element={<PlaceholderPage title="History" />} />
-    </Routes>
+        {/* Protected dashboard routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/cv-analysis" element={<CVAnalysisPage />} />
+            <Route path="/jd-matching" element={<JDMatchingPage />} />
+            <Route path="/interview" element={<InterviewPage />} />
+            <Route path="/interview/:id" element={<InterviewSessionPage />} />
+            <Route path="/history" element={<HistoryPage />} />
+          </Route>
+        </Route>
+
+        {/* Fallbacks */}
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </AuthProvider>
   )
 }
-
-// Temporary placeholder — will be replaced with actual pages
-function PlaceholderPage({ title }: { title: string }) {
-  return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      gap: '1rem',
-    }}>
-      <h1 className="gradient-text" style={{ fontSize: '2rem', fontWeight: 700 }}>
-        CV & Interview Coach
-      </h1>
-      <p style={{ color: 'var(--color-text-muted)' }}>
-        📍 {title} — Coming soon
-      </p>
-    </div>
-  )
-}
-
-export default App
