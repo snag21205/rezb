@@ -1,6 +1,6 @@
 /**
  * Script lấy JWT token từ Supabase để test API
- * Chạy: npx ts-node scripts/get-token.ts
+ * Chạy: pnpm --filter @cv-coach/server get-token
  */
 import { createClient } from '@supabase/supabase-js'
 import * as dotenv from 'dotenv'
