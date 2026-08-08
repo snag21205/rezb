@@ -57,7 +57,7 @@ export default function JDMatchingPage() {
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 32 }}>
+      <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 32 }}>
         {/* Step 1: Select CV */}
         <Card style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <h2 className="text-heading-sm" style={{ fontSize: 20 }}>1. Chọn CV của bạn</h2>
@@ -148,7 +148,7 @@ export default function JDMatchingPage() {
               </div>
             </Card>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+            <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
               <Card>
                 <h3 className="text-heading-sm" style={{ fontSize: 18, color: 'var(--color-success)', marginBottom: 12 }}>
                   Kỹ năng đã đáp ứng ({matchResult.matched_skills?.length || 0})

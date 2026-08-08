@@ -119,10 +119,10 @@ export default function CVAnalysisPage() {
             style={{ display: 'flex', flexDirection: 'column', gap: 24 }}
           >
             {/* Overview Scores */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
-              <Card style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', padding: 28 }}>
-                <ScoreCircle score={analysisResult.overall_score ?? 0} size={100} label="Điểm Tổng Thể" />
-                <ScoreCircle score={analysisResult.ats_score ?? 0} size={100} label="ATS Score" />
+            <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+              <Card style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', padding: 24 }}>
+                <ScoreCircle score={analysisResult.overall_score ?? 0} size={90} label="Điểm Tổng Thể" />
+                <ScoreCircle score={analysisResult.ats_score ?? 0} size={90} label="ATS Score" />
               </Card>
 
               <Card>
@@ -149,7 +149,7 @@ export default function CVAnalysisPage() {
             </div>
 
             {/* Strengths & Weaknesses */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+            <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
               <Card>
                 <h3 className="text-heading-sm" style={{ fontSize: 20, color: 'var(--color-success)', marginBottom: 16 }}>
                   Điểm mạnh

@@ -91,7 +91,7 @@ export default function InterviewPage() {
           <h2 className="text-heading-sm" style={{ fontSize: 20, marginBottom: 12 }}>
             2. Định dạng câu hỏi
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+          <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
             {[
               { id: 'mixed', label: 'Hỗn hợp (Mixed)', desc: 'Chuyên môn & Hành vi' },
               { id: 'technical', label: 'Chuyên môn', desc: 'Code, Kiến trúc & Kỹ thuật' },

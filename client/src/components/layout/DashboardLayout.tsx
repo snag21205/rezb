@@ -36,7 +36,7 @@ export default function DashboardLayout() {
         backdropFilter: 'blur(16px) saturate(180%)',
         borderBottom: '1px solid var(--color-mist)',
       }}>
-        <div style={{
+        <div className="header-content" style={{
           maxWidth: 1200,
           margin: '0 auto',
           padding: '0 24px',
@@ -46,7 +46,7 @@ export default function DashboardLayout() {
           justifyContent: 'space-between',
         }}>
           {/* Rebrand Brand Logo: rezb */}
-          <NavLink to="/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <NavLink to="/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
             <div style={{
               width: 26, height: 26, borderRadius: 6,
               background: 'var(--color-twilight)',
@@ -57,13 +57,10 @@ export default function DashboardLayout() {
             <span className="font-serif" style={{ fontSize: 22, fontWeight: 400, color: 'var(--color-graphite)', letterSpacing: '-0.03em' }}>
               rezb
             </span>
-            <span className="badge badge-blue" style={{ fontSize: 10, padding: '1px 6px', marginLeft: 2 }}>
-              v2.4
-            </span>
           </NavLink>
 
-          {/* Apple-style Liquid Glass Pill Navigation */}
-          <nav style={{
+          {/* Apple-style Liquid Glass Pill Navigation (Scrollable on mobile) */}
+          <nav className="nav-scroll" style={{
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
@@ -86,11 +83,12 @@ export default function DashboardLayout() {
                   end={item.end}
                   style={{
                     position: 'relative',
-                    padding: '6px 16px',
+                    padding: '6px 14px',
                     borderRadius: 50,
                     textDecoration: 'none',
                     fontSize: 13,
                     fontWeight: 500,
+                    whiteSpace: 'nowrap',
                     color: isActive ? 'var(--color-ink-black)' : 'var(--color-ash)',
                     transition: 'color 0.2s ease',
                     zIndex: 1,
@@ -124,8 +122,8 @@ export default function DashboardLayout() {
           </nav>
 
           {/* User Profile & Sign Out */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div className="hide-mobile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
               <span className="text-caption" style={{ fontWeight: 600, color: 'var(--color-graphite)' }}>
                 {displayName}
               </span>
@@ -142,7 +140,7 @@ export default function DashboardLayout() {
       </header>
 
       {/* Main Content Area with Animated Page Transition */}
-      <main style={{ flex: 1, padding: '36px 24px', maxWidth: 1200, width: '100%', margin: '0 auto' }}>
+      <main className="main-content" style={{ flex: 1, padding: '36px 24px', maxWidth: 1200, width: '100%', margin: '0 auto' }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
@@ -163,7 +161,7 @@ export default function DashboardLayout() {
         padding: '48px 24px 32px',
         marginTop: 64,
       }}>
-        <div style={{
+        <div className="footer-grid" style={{
           maxWidth: 1200,
           margin: '0 auto',
           display: 'grid',
@@ -234,7 +232,7 @@ export default function DashboardLayout() {
         </div>
 
         {/* Colophon Bottom Bar */}
-        <div style={{
+        <div className="footer-colophon" style={{
           maxWidth: 1200,
           margin: '0 auto',
           paddingTop: 24,

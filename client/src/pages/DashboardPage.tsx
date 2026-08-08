@@ -31,9 +31,9 @@ export default function DashboardPage() {
       {/* Stats Grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: 20,
-        marginBottom: 48,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+        gap: 16,
+        marginBottom: 40,
       }}>
         <Card>
           <p className="text-caption" style={{ color: 'var(--color-ash)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.04em' }}>

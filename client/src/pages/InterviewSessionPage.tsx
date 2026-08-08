@@ -148,7 +148,7 @@ export default function InterviewSessionPage() {
               </div>
             </Card>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+            <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
               <Card>
                 <h3 className="text-heading-sm" style={{ fontSize: 18, color: 'var(--color-success)', marginBottom: 12 }}>
                   Điểm mạnh ấn tượng
@@ -237,7 +237,7 @@ export default function InterviewSessionPage() {
                     <p className="text-caption" style={{ color: 'var(--color-ash)', marginBottom: 8, fontWeight: 500 }}>
                       MÔ HÌNH STAR:
                     </p>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+                    <div className="grid-star" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
                       {Object.entries(currentFeedback?.starAnalysis || currentQ?.star_analysis || {}).map(([k, val]: [string, any]) => (
                         <div key={k} className="card-linen" style={{ padding: 10, textAlign: 'center' }}>
                           <p className="text-caption" style={{ textTransform: 'uppercase', color: 'var(--color-ash)', fontSize: 11 }}>{k}</p>
