@@ -3,7 +3,7 @@ import { aiLimiter } from '../middleware/rateLimiter'
 import { cvUpload } from '../middleware/fileValidation'
 import * as cvController from '../controllers/cv.controller'
 
-const router = Router()
+const router: Router = Router()
 
 // GET /api/cv — Lấy danh sách CV của user
 router.get('/', cvController.getAll)

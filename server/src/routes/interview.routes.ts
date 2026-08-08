@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { aiLimiter } from '../middleware/rateLimiter'
 import * as interviewController from '../controllers/interview.controller'
 
-const router = Router()
+const router: Router = Router()
 
 // GET /api/interview/history — Lịch sử các session (phải trước /:sessionId)
 router.get('/history', interviewController.history)

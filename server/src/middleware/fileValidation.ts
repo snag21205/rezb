@@ -1,6 +1,6 @@
 import multer from 'multer'
 import path from 'path'
-import type { Request } from 'express'
+import type { Request, RequestHandler } from 'express'
 
 const ALLOWED_EXTENSIONS = ['.pdf', '.docx']
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
@@ -11,7 +11,7 @@ const storage = multer.memoryStorage()
  * Multer upload config for CV files
  * Accepts: PDF, DOCX | Max: 5MB
  */
-export const cvUpload = multer({
+export const cvUpload: RequestHandler = multer({
   storage,
   limits: { fileSize: MAX_FILE_SIZE },
   fileFilter: (_req: Request, file, cb) => {

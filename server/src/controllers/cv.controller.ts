@@ -45,10 +45,10 @@ export const getAll = asyncHandler(async (req: Request, res: Response) => {
  * Gọi Gemini AI phân tích CV
  */
 export const analyze = asyncHandler(async (req: Request, res: Response) => {
-  const { resumeId } = req.params
+  const resumeId = String(req.params.resumeId)
   const userId = req.userId!
 
-  const result = await analyzeCV(resumeId!, userId)
+  const result = await analyzeCV(resumeId, userId)
 
   res.json({
     success: true,
@@ -61,10 +61,10 @@ export const analyze = asyncHandler(async (req: Request, res: Response) => {
  * Lấy lịch sử phân tích
  */
 export const getHistory = asyncHandler(async (req: Request, res: Response) => {
-  const { resumeId } = req.params
+  const resumeId = String(req.params.resumeId)
   const userId = req.userId!
 
-  const history = await getAnalysisHistory(resumeId!, userId)
+  const history = await getAnalysisHistory(resumeId, userId)
 
   res.json({
     success: true,

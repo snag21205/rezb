@@ -36,7 +36,7 @@ export const start = asyncHandler(async (req: Request, res: Response) => {
  * POST /api/interview/:sessionId/answer
  */
 export const answer = asyncHandler(async (req: Request, res: Response) => {
-  const { sessionId } = req.params
+  const sessionId = String(req.params.sessionId)
   const { questionId, answer: userAnswer } = req.body
   const userId = req.userId!
 
@@ -44,7 +44,7 @@ export const answer = asyncHandler(async (req: Request, res: Response) => {
     throw new AppError('Vui lòng cung cấp questionId và answer.', 400)
   }
 
-  const result = await submitAnswer(sessionId!, userId, questionId, userAnswer)
+  const result = await submitAnswer(sessionId, userId, questionId, userAnswer)
 
   res.json({
     success: true,
@@ -56,10 +56,10 @@ export const answer = asyncHandler(async (req: Request, res: Response) => {
  * POST /api/interview/:sessionId/complete
  */
 export const complete = asyncHandler(async (req: Request, res: Response) => {
-  const { sessionId } = req.params
+  const sessionId = String(req.params.sessionId)
   const userId = req.userId!
 
-  const result = await completeInterview(sessionId!, userId)
+  const result = await completeInterview(sessionId, userId)
 
   res.json({
     success: true,
@@ -84,10 +84,10 @@ export const history = asyncHandler(async (req: Request, res: Response) => {
  * GET /api/interview/:sessionId
  */
 export const getSession = asyncHandler(async (req: Request, res: Response) => {
-  const { sessionId } = req.params
+  const sessionId = String(req.params.sessionId)
   const userId = req.userId!
 
-  const session = await getInterviewSession(sessionId!, userId)
+  const session = await getInterviewSession(sessionId, userId)
 
   res.json({
     success: true,

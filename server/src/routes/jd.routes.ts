@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { aiLimiter } from '../middleware/rateLimiter'
 import * as jdController from '../controllers/jd.controller'
 
-const router = Router()
+const router: Router = Router()
 
 // GET /api/jd — Lấy danh sách JD đã lưu
 router.get('/', jdController.getAll)

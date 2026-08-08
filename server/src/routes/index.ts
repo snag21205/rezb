@@ -7,7 +7,7 @@ import cvRoutes from './cv.routes'
 import jdRoutes from './jd.routes'
 import interviewRoutes from './interview.routes'
 
-const router = Router()
+const router: Router = Router()
 
 router.use(apiLimiter)
 router.use(authMiddleware)
