@@ -8,11 +8,13 @@ import { Input } from '../components/ui/Input'
 import { Card, Divider } from '../components/ui/index'
 
 export default function LoginPage() {
-  const { signIn } = useAuth()
+  const { signIn, resendVerificationEmail } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [unconfirmedEmail, setUnconfirmedEmail] = useState(false)
+  const [resending, setResending] = useState(false)
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
 
   const validate = () => {
@@ -29,14 +31,33 @@ export default function LoginPage() {
     if (!validate()) return
 
     setLoading(true)
+    setUnconfirmedEmail(false)
     try {
       await signIn(email, password)
       toast.success('Đăng nhập thành công!')
       navigate('/dashboard')
     } catch (err: any) {
-      toast.error(err.message ?? 'Đăng nhập thất bại')
+      if (err.message === 'EMAIL_NOT_CONFIRMED') {
+        setUnconfirmedEmail(true)
+        toast.error('Email chưa được xác nhận')
+      } else {
+        toast.error(err.message ?? 'Đăng nhập thất bại')
+      }
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleResendConfirm = async () => {
+    if (!email) return
+    setResending(true)
+    try {
+      await resendVerificationEmail(email)
+      toast.success(`Đã gửi lại thư xác thực tới ${email}!`)
+    } catch (err: any) {
+      toast.error(err.message || 'Không thể gửi lại thư xác thực')
+    } finally {
+      setResending(false)
     }
   }
 
@@ -124,6 +145,32 @@ export default function LoginPage() {
                 Quên mật khẩu?
               </Link>
             </div>
+
+            {unconfirmedEmail && (
+              <div className="card-linen" style={{
+                padding: 14,
+                borderColor: 'rgba(217, 119, 6, 0.4)',
+                background: 'rgba(217, 119, 6, 0.06)',
+                borderRadius: 'var(--radius-sm)',
+              }}>
+                <p className="text-caption" style={{ color: 'var(--color-warning)', fontWeight: 600, marginBottom: 4 }}>
+                  ⚠️ Email chưa được xác thực
+                </p>
+                <p className="text-caption" style={{ color: 'var(--color-charcoal)', fontSize: 12, marginBottom: 10 }}>
+                  Vui lòng kiểm tra hộp thư (hoặc mục Spam/Quảng cáo) để nhấp vào liên kết xác nhận.
+                </p>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  loading={resending}
+                  onClick={handleResendConfirm}
+                  style={{ width: '100%', fontSize: 12 }}
+                >
+                  {resending ? 'Đang gửi lại...' : 'Gửi lại email xác thực ngay'}
+                </Button>
+              </div>
+            )}
 
             <Button
               id="login-submit"

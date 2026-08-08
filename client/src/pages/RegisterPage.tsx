@@ -35,9 +35,14 @@ export default function RegisterPage() {
 
     setLoading(true)
     try {
-      await signUp(form.email, form.password, form.fullName)
-      toast.success('Đăng ký thành công! Kiểm tra email để xác nhận tài khoản.')
-      navigate('/login')
+      const res = await signUp(form.email, form.password, form.fullName)
+      if (res.needsConfirmation) {
+        toast.success('Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản.')
+        navigate(`/verify-email-sent?email=${encodeURIComponent(form.email)}`)
+      } else {
+        toast.success('Đăng ký thành công!')
+        navigate('/dashboard')
+      }
     } catch (err: any) {
       toast.error(err.message ?? 'Đăng ký thất bại')
     } finally {

@@ -3,12 +3,18 @@ import type { ReactNode } from 'react'
 import { supabase } from '../lib/supabase'
 import type { User, Session } from '@supabase/supabase-js'
 
+interface SignUpResult {
+  needsConfirmation: boolean
+  user: User | null
+}
+
 interface AuthContextValue {
   user: User | null
   session: Session | null
   loading: boolean
   signIn: (email: string, password: string) => Promise<void>
-  signUp: (email: string, password: string, fullName: string) => Promise<void>
+  signUp: (email: string, password: string, fullName: string) => Promise<SignUpResult>
+  resendVerificationEmail: (email: string) => Promise<void>
   signOut: () => Promise<void>
 }
 
@@ -27,10 +33,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false)
     })
 
-    // Listen for auth changes
+    // Listen for auth changes (sign in, sign out, token refresh, email confirmation)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
       setUser(session?.user ?? null)
+      setLoading(false)
     })
 
     return () => subscription.unsubscribe()
@@ -38,14 +45,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) throw new Error(error.message)
+    if (error) {
+      if (error.message.includes('Email not confirmed') || error.message.includes('not verified')) {
+        throw new Error('EMAIL_NOT_CONFIRMED')
+      }
+      throw new Error(error.message)
+    }
   }
 
-  const signUp = async (email: string, password: string, fullName: string) => {
-    const { error } = await supabase.auth.signUp({
+  const signUp = async (email: string, password: string, fullName: string): Promise<SignUpResult> => {
+    const redirectUrl = `${window.location.origin}/auth/callback`
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: fullName } },
+      options: {
+        data: { full_name: fullName },
+        emailRedirectTo: redirectUrl,
+      },
+    })
+
+    if (error) throw new Error(error.message)
+
+    // Check if email confirmation is required (session is null or email_confirmed_at is null)
+    const needsConfirmation = !data.session || !data.user?.email_confirmed_at
+    return {
+      needsConfirmation,
+      user: data.user,
+    }
+  }
+
+  const resendVerificationEmail = async (email: string) => {
+    const redirectUrl = `${window.location.origin}/auth/callback`
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email,
+      options: {
+        emailRedirectTo: redirectUrl,
+      },
     })
     if (error) throw new Error(error.message)
   }
@@ -55,7 +91,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{
+      user,
+      session,
+      loading,
+      signIn,
+      signUp,
+      resendVerificationEmail,
+      signOut,
+    }}>
       {children}
     </AuthContext.Provider>
   )

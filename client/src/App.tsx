@@ -6,6 +6,8 @@ import { ProtectedRoute, PublicRoute } from './components/auth/ProtectedRoute'
 // Pages
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import VerifyEmailSentPage from './pages/VerifyEmailSentPage'
+import AuthCallbackPage from './pages/AuthCallbackPage'
 import DashboardLayout from './components/layout/DashboardLayout'
 import DashboardPage from './pages/DashboardPage'
 import CVAnalysisPage from './pages/CVAnalysisPage'
@@ -21,9 +23,9 @@ export default function App() {
         position="top-right"
         toastOptions={{
           style: {
-            background: 'var(--color-surface-2)',
-            color: 'var(--color-text)',
-            border: '1px solid var(--color-border)',
+            background: 'var(--color-paper)',
+            color: 'var(--color-charcoal)',
+            border: '1px solid var(--color-mist)',
             borderRadius: 'var(--radius-md)',
             fontFamily: 'var(--font-sans)',
             fontSize: '14px',
@@ -35,7 +37,11 @@ export default function App() {
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/verify-email-sent" element={<VerifyEmailSentPage />} />
         </Route>
+
+        {/* Email confirmation callback route */}
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
 
         {/* Protected dashboard routes */}
         <Route element={<ProtectedRoute />}>
